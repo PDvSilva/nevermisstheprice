@@ -495,6 +495,76 @@ export default function ModernHome() {
       {!hasSearched && (
         <>
 
+          {/* ── TRUST / COVERAGE ── */}
+          <section style={{ padding: "80px 48px 60px", textAlign: "center", position: "relative", overflow: "hidden", borderTop: `1px solid ${C.border}`, background: C.cream }}>
+            {/* Concentric decorative rings */}
+            {[220, 300, 380].map((size) => (
+              <div key={size} style={{
+                position: "absolute", top: "50%", left: "50%",
+                width: size, height: size,
+                transform: "translate(-50%, -50%)",
+                borderRadius: "50%",
+                border: `1px solid ${C.border}`,
+                opacity: 0.55,
+                pointerEvents: "none",
+              }} />
+            ))}
+
+            <div style={{ maxWidth: 700, margin: "0 auto", position: "relative" }}>
+              {/* Arc container */}
+              <div style={{ position: "relative", height: 300, width: "100%" }}>
+
+                {/* Center text */}
+                <div style={{
+                  position: "absolute", top: "50%", left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  zIndex: 2, width: 190,
+                }}>
+                  <p style={{
+                    fontFamily: "'Roboto', sans-serif",
+                    fontSize: "clamp(15px, 2vw, 19px)", fontWeight: 700,
+                    color: C.espresso, lineHeight: 1.4,
+                  }}>
+                    We scan all major Amazon EU stores
+                  </p>
+                </div>
+
+                {/* Country bubbles – arc positions (semicircle, top half) */}
+                {[
+                  { flag: "🇪🇸", label: "Spain",   left: "19%", top: "65%" },
+                  { flag: "🇩🇪", label: "Germany", left: "27%", top: "23%" },
+                  { flag: "🇫🇷", label: "France",  left: "45%", top:  "5%" },
+                  { flag: "🇮🇹", label: "Italy",   left: "63%", top: "23%" },
+                  { flag: "🇬🇧", label: "UK",      left: "71%", top: "65%" },
+                ].map((item, i) => (
+                  <motion.div
+                    key={item.label}
+                    initial={{ opacity: 0, scale: 0.75 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.45, delay: i * 0.08, ease: [0.4, 0, 0.2, 1] }}
+                    style={{
+                      position: "absolute",
+                      left: item.left, top: item.top,
+                      display: "flex", flexDirection: "column", alignItems: "center", gap: 7,
+                    }}
+                  >
+                    <div style={{
+                      width: 66, height: 66, borderRadius: "50%",
+                      background: C.surface, border: `1.5px solid ${C.border}`,
+                      boxShadow: "0 2px 10px rgba(28,24,20,0.08), 0 1px 3px rgba(28,24,20,0.05)",
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      fontSize: 28,
+                    }}>
+                      {item.flag}
+                    </div>
+                    <span style={{ fontSize: 11.5, fontWeight: 500, color: C.bark }}>{item.label}</span>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </section>
+
           {/* ── LIVE DEMO ── */}
           {(() => {
             const p = DEMO_PRODUCTS[demoSelected];
