@@ -257,8 +257,6 @@ export default function ModernHome() {
             { label: "Live demo",    id: "demo" },
             { label: "Features",     id: "features" },
             { label: "How it works", id: "how" },
-            { label: "Testimonials", id: "testimonials" },
-            { label: "About",        id: "about" },
           ].map(({ label, id }) => (
             <li key={id}>
               <button
@@ -343,30 +341,30 @@ export default function ModernHome() {
         {/* Search */}
         <motion.div
           initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, delay: 0.22 }}
-          style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: 540 }}
+          style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: 680 }}
         >
           <div style={{
-            display: "flex", alignItems: "center", gap: 10,
-            padding: "8px 8px 8px 18px", borderRadius: 9999,
-            background: C.surface, border: `1.5px solid ${C.accentMid}`,
-            boxShadow: `0 0 0 5px ${C.accentSoft}, 0 2px 4px rgba(28,24,20,0.06), 0 20px 60px rgba(28,24,20,0.12)`,
+            display: "flex", alignItems: "center", gap: 12,
+            padding: "12px 12px 12px 24px", borderRadius: 9999,
+            background: C.surface, border: `2px solid ${C.accentMid}`,
+            boxShadow: `0 0 0 7px ${C.accentSoft}, 0 2px 4px rgba(28,24,20,0.06), 0 24px 64px rgba(28,24,20,0.14)`,
           }}>
-            <Search style={{ width: 16, height: 16, color: C.dust, flexShrink: 0 }} />
+            <Search style={{ width: 20, height: 20, color: C.bark, flexShrink: 0 }} />
             <input
               id="hero-search"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-              placeholder='Try "Sony WH-1000XM5" or paste an ASIN…'
+              placeholder="Paste Amazon link or search product (e.g. AirPods Pro)"
               disabled={loading}
               style={{
                 flex: 1, background: "none", border: "none", outline: "none",
-                fontFamily: "'Roboto', sans-serif", fontSize: 14, color: C.espresso, minWidth: 0,
+                fontFamily: "'Roboto', sans-serif", fontSize: 17, color: C.espresso, minWidth: 0,
               }}
             />
             {inputValue && (
               <button onClick={() => setInputValue("")} style={{ background: "none", border: "none", cursor: "pointer", color: C.dust, display: "flex" }}>
-                <X style={{ width: 16, height: 16 }} />
+                <X style={{ width: 18, height: 18 }} />
               </button>
             )}
             <button
@@ -374,33 +372,30 @@ export default function ModernHome() {
               disabled={loading || !inputValue.trim()}
               style={{
                 background: C.accent, color: "#fff", border: "none",
-                padding: "10px 22px", borderRadius: 9999,
-                fontSize: 13.5, fontWeight: 600, fontFamily: "'Roboto', sans-serif",
+                padding: "14px 30px", borderRadius: 9999,
+                fontSize: 15, fontWeight: 700, fontFamily: "'Roboto', sans-serif",
                 cursor: loading || !inputValue.trim() ? "not-allowed" : "pointer",
                 opacity: loading || !inputValue.trim() ? 0.6 : 1,
                 transition: "all .2s", whiteSpace: "nowrap",
-                boxShadow: "0 2px 8px rgba(232,77,16,.28)",
-                display: "flex", alignItems: "center", gap: 6,
+                boxShadow: "0 4px 14px rgba(232,77,16,.40)",
+                display: "flex", alignItems: "center", gap: 7,
+                letterSpacing: "-0.01em",
               }}
-              onMouseEnter={e => { if (!loading && inputValue.trim()) (e.currentTarget as HTMLButtonElement).style.background = C.accentH; }}
-              onMouseLeave={e => (e.currentTarget as HTMLButtonElement).style.background = C.accent}
+              onMouseEnter={e => { if (!loading && inputValue.trim()) { (e.currentTarget as HTMLButtonElement).style.background = C.accentH; (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-1px)"; } }}
+              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = C.accent; (e.currentTarget as HTMLButtonElement).style.transform = ""; }}
             >
-              {loading ? <Loader2 style={{ width: 15, height: 15, animation: "spin 1s linear infinite" }} /> : "Compare →"}
+              {loading ? <Loader2 style={{ width: 16, height: 16, animation: "spin 1s linear infinite" }} /> : "Find best price →"}
             </button>
           </div>
 
-          {/* Flag strip */}
-          <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 16, justifyContent: "center" }}>
-            <span style={{ fontSize: 11.5, color: C.dust, fontWeight: 500 }}>Covers</span>
-            {["🇬🇧 UK", "🇩🇪 DE", "🇫🇷 FR", "🇪🇸 ES", "🇮🇹 IT"].map((flag) => (
-              <span key={flag} style={{
-                fontSize: 12, fontWeight: 500, color: C.bark,
-                background: "rgba(255,255,255,0.7)", border: `1px solid ${C.border}`,
-                borderRadius: 20, padding: "3px 10px", lineHeight: 1.4,
-                backdropFilter: "blur(8px)",
-              }}>{flag}</span>
+          {/* Country coverage */}
+          <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 16, justifyContent: "center" }}>
+            <span style={{ fontSize: 12, color: C.dust, fontWeight: 500 }}>Compare prices across:</span>
+            {["🇪🇸", "🇩🇪", "🇫🇷", "🇮🇹", "🇬🇧"].map((flag) => (
+              <span key={flag} style={{ fontSize: 22, lineHeight: 1 }}>{flag}</span>
             ))}
           </div>
+
         </motion.div>
       </section>
 
@@ -732,36 +727,7 @@ export default function ModernHome() {
             </motion.div>
           </section>
 
-          {/* ── TESTIMONIALS ── */}
-          <section id="testimonials" style={{ padding: "120px 48px", maxWidth: 1060, margin: "0 auto" }}>
-            <div style={{ textAlign: "center", marginBottom: 52 }}>
-              <SectionLabel>Real users</SectionLabel>
-              <h2 style={{ fontFamily: "'Roboto', sans-serif", fontSize: "clamp(28px,3.5vw,48px)", fontWeight: 700, letterSpacing: "-0.025em", color: C.espresso }}>
-                Trusted by smart<br />shoppers across Europe.
-              </h2>
-            </div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 14, alignItems: "start" }}>
-              {TESTIMONIALS.map((t, i) => (
-                <motion.div key={t.name}
-                  initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-                  style={{ padding: 28, borderRadius: 14, border: `1.5px solid ${C.border}`, background: C.surface, transition: "all .2s", ...(t.shift ? { transform: "translateY(-20px)" } : {}) }}
-                  onMouseEnter={e => { const el = e.currentTarget as HTMLDivElement; el.style.transform = t.shift ? "translateY(-23px)" : "translateY(-2px)"; el.style.boxShadow = "0 2px 4px rgba(28,24,20,0.06),0 20px 60px rgba(28,24,20,0.12)"; }}
-                  onMouseLeave={e => { const el = e.currentTarget as HTMLDivElement; el.style.transform = t.shift ? "translateY(-20px)" : ""; el.style.boxShadow = ""; }}
-                >
-                  <div style={{ color: C.accent, fontSize: 12, letterSpacing: 1, marginBottom: 14 }}>★★★★★</div>
-                  <p style={{ fontSize: 13.5, color: C.bark, lineHeight: 1.8, fontWeight: 300, marginBottom: 18 }}>{t.text}</p>
-                  <hr style={{ border: "none", borderTop: `1px solid ${C.border2}`, marginBottom: 14 }} />
-                  <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                    <div style={{ width: 36, height: 36, borderRadius: "50%", background: C.cream2, border: `1.5px solid ${C.border}`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 700, color: C.bark, fontFamily: "'Roboto', sans-serif", flexShrink: 0 }}>{t.initials}</div>
-                    <div>
-                      <div style={{ fontFamily: "'Roboto', sans-serif", fontSize: 13, fontWeight: 700, color: C.espresso }}>{t.name}</div>
-                      <div style={{ fontSize: 11, color: C.dust, marginTop: 1 }}>{t.role}</div>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </section>
+          {/* TESTIMONIALS removed — placeholder for real user reviews */}
 
           {/* ── CTA ── */}
           <section style={{ padding: "60px 48px 120px", maxWidth: 880, margin: "0 auto" }}>
